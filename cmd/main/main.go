@@ -16,8 +16,10 @@ import (
 
 func main() {
 	server := &http.Server{
-		Addr:    ":8080",
-		Handler: service(),
+		Addr:              ":8080",
+		ReadTimeout:       1 * time.Second,
+		ReadHeaderTimeout: 2 * time.Second,
+		Handler:           service(),
 	}
 
 	serverCtx, serverStopCtx := context.WithCancel(context.Background())
