@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"io"
 	"net/http"
 	"testing"
 
@@ -8,6 +10,12 @@ import (
 	"github.com/sshaparenko/validgate/internal/handlers"
 	"github.com/steinfletcher/apitest"
 )
+
+type CustomReader struct{}
+
+func (cr *CustomReader) Read(p []byte) (n int, err error) {
+	return 0, fmt.Errorf("simulated read error")
+}
 
 func Test_ValidCardNumber(t *testing.T) {
 	card := domain.Card{
@@ -65,6 +73,26 @@ func Test_InvalidYear(t *testing.T) {
 		HandlerFunc(handlers.ValidateCard).
 		Post("api/v1/valid").
 		JSON(card).
+		Expect(t).
+		Status(http.StatusBadRequest).End()
+}
+
+func Test_UnmurshalFailed(t *testing.T) {
+	apitest.New().
+		HandlerFunc(handlers.ValidateCard).
+		Post("api/v1/valid").
+		Body(`{  `).
+		Expect(t).
+		Status(http.StatusBadRequest).End()
+}
+
+func Test_InvalidBody(t *testing.T) {
+	apitest.New().
+		HandlerFunc(handlers.ValidateCard).
+		Intercept(func(r *http.Request) {
+			r.Body = io.NopCloser(&CustomReader{})
+		}).
+		Post("api/v1/valid").
 		Expect(t).
 		Status(http.StatusBadRequest).End()
 }
