@@ -24,6 +24,9 @@ jobs:
       - name: Running Tests
         run: go test -cover ./...
 
+      - name: Update coverage report
+        uses: ncruces/go-coverage-report@v0
+
       - name: Security Check
         run: gosec ./...
 
