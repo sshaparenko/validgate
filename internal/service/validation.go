@@ -6,13 +6,18 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+	"time"
 )
 
+var ErrLuhnCheck error = errors.New("card number fails Luhn check")
+var ErrExpDate error = errors.New("card is expired")
+
 func VailedateNumber(number string) (bool, error) {
-	return luhnCheck(number)
+	return LuhnCheck(number)
 }
 
-func luhnCheck(number string) (bool, error) {
+// LuhnCheck validates card number according to Luhn algorithm
+func LuhnCheck(number string) (bool, error) {
 	var sum int
 
 	number = strings.Replace(number, " ", "", -1)
@@ -44,7 +49,7 @@ func luhnCheck(number string) (bool, error) {
 		return true, nil
 	}
 
-	return false, errors.New("card number fails Luhn check")
+	return false, ErrLuhnCheck
 }
 
 // convertSrtingToIntes converts card number
@@ -81,4 +86,18 @@ func substractByNine(cardDigits []int) {
 func getLastDigit(number string) (int, error) {
 	lastRune := number[len(number)-1]
 	return strconv.Atoi(string(lastRune))
+}
+
+func CheckExpDate(month int, year int) bool {
+	currentYear, currentMonth, _ := time.Now().Date()
+
+	if year > currentYear {
+		return true
+	}
+
+	if year == currentYear && month > int(currentMonth) {
+		return true
+	}
+
+	return false
 }
