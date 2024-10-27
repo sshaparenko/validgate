@@ -1,6 +1,7 @@
 package service
 
 import (
+	"log"
 	"testing"
 )
 
@@ -35,6 +36,51 @@ func TestValidateNumber(t *testing.T) {
 				got, _ := VailedateNumber(n)
 				if got != tc.want {
 					t.Fatalf("%s: expected: \"%v\", got \"%v\"\ntested card number: %s", name, tc.want, got, n)
+				}
+			}
+		})
+	}
+}
+
+func TestCheckExpDate(t *testing.T) {
+
+	type Input struct {
+		ExpMonth int
+		ExpYear  int
+	}
+
+	type test struct {
+		input []Input
+		want  bool
+	}
+
+	tests := map[string]test{
+		"valid_dates": {[]Input{{
+			ExpMonth: 11,
+			ExpYear:  2024}, {
+			ExpMonth: 10,
+			ExpYear:  2025,
+		}}, true},
+		"invalid_dates": {[]Input{{
+			ExpMonth: 6,
+			ExpYear:  2024}, {
+			ExpMonth: 10,
+			ExpYear:  2024}, {
+			ExpMonth: 10,
+			ExpYear:  2023}, {
+			ExpMonth: 0,
+			ExpYear:  0,
+		}}, false},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			for _, d := range tc.input {
+				got := CheckExpDate(d.ExpMonth, d.ExpYear)
+				if got != tc.want {
+					log.Println(d.ExpMonth)
+					log.Println(d.ExpYear)
+					t.Fatalf("%s: expected: \"%v\", got \"%v\"\n", name, tc.want, got)
 				}
 			}
 		})
