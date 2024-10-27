@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/sshaparenko/validgate/compare/v1.1.0...v1.2.0) (2024-10-27)
+
+
+### Features
+
+* add /validate enpoint that validates card by its number and expiration date ([0eb823c](https://github.com/sshaparenko/validgate/commit/0eb823c3fbde8277a35d4ebca8a2b5de71cc4e2e))
+
+
+### Bug Fixes
+
+* add error handling for render function ([0e68c90](https://github.com/sshaparenko/validgate/commit/0e68c90fd521c41d0109c029dffa2543422e9520))
+* add ReadTimeout and ReadHeaderTimeout to mitigate Slowloris Attack ([e281cf9](https://github.com/sshaparenko/validgate/commit/e281cf9e801177323c1932d8b89f8acc479a6f8f))
+
 ## [1.1.0](https://github.com/sshaparenko/validgate/compare/v1.0.0...v1.1.0) (2024-10-27)
 
 
