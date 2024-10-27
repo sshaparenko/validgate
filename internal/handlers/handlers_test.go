@@ -1,4 +1,4 @@
-package main
+package handlers
 
 import (
 	"fmt"
@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/sshaparenko/validgate/internal/domain"
-	"github.com/sshaparenko/validgate/internal/handlers"
 	"github.com/steinfletcher/apitest"
 )
 
@@ -25,7 +24,7 @@ func Test_ValidCardNumber(t *testing.T) {
 	}
 
 	apitest.New().
-		HandlerFunc(handlers.ValidateCard).
+		HandlerFunc(ValidateCard).
 		Post("api/v1/valid").
 		JSON(card).
 		Expect(t).
@@ -40,7 +39,7 @@ func Test_InvalidCardNumber(t *testing.T) {
 	}
 
 	apitest.New().
-		HandlerFunc(handlers.ValidateCard).
+		HandlerFunc(ValidateCard).
 		Post("api/v1/valid").
 		JSON(card).
 		Expect(t).
@@ -55,7 +54,7 @@ func Test_InvalidMonth(t *testing.T) {
 	}
 
 	apitest.New().
-		HandlerFunc(handlers.ValidateCard).
+		HandlerFunc(ValidateCard).
 		Post("api/v1/valid").
 		JSON(card).
 		Expect(t).
@@ -70,7 +69,7 @@ func Test_InvalidYear(t *testing.T) {
 	}
 
 	apitest.New().
-		HandlerFunc(handlers.ValidateCard).
+		HandlerFunc(ValidateCard).
 		Post("api/v1/valid").
 		JSON(card).
 		Expect(t).
@@ -79,7 +78,7 @@ func Test_InvalidYear(t *testing.T) {
 
 func Test_UnmurshalFailed(t *testing.T) {
 	apitest.New().
-		HandlerFunc(handlers.ValidateCard).
+		HandlerFunc(ValidateCard).
 		Post("api/v1/valid").
 		Body(`{  `).
 		Expect(t).
@@ -88,7 +87,7 @@ func Test_UnmurshalFailed(t *testing.T) {
 
 func Test_InvalidBody(t *testing.T) {
 	apitest.New().
-		HandlerFunc(handlers.ValidateCard).
+		HandlerFunc(ValidateCard).
 		Intercept(func(r *http.Request) {
 			r.Body = io.NopCloser(&CustomReader{})
 		}).

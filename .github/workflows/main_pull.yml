@@ -22,7 +22,7 @@ jobs:
         run: go install github.com/securego/gosec/v2/cmd/gosec@latest
 
       - name: Running Tests
-        run: go test -coverprofile=coverage.xml ./...
+        run: go test ./internal/... -coverprofile=coverage.xml ./...
 
       - name: Codecov report
         uses: codecov/codecov-action@v4
