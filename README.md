@@ -1,5 +1,7 @@
 # validgate
 
+[![codecov](https://codecov.io/github/sshaparenko/validgate/graph/badge.svg?token=VPCRA71BD0)](https://codecov.io/github/sshaparenko/validgate)
+
 Validgate is a service that validates the credit card number according to the Luhn Algorithm among with card expiration month and year.
 
 ## Table of Contents
