@@ -62,6 +62,6 @@ POST `/validate`:
 ```
 curl -X POST http://<IPAddress>:8080/api/v1/validate \
      -H "Content-Type: application/json" \
-     -H "Accept */*"
+     -H "Accept */*" \
      -d '{"card_number": "4111111111111111", "exp_month": 10, "exp_year": 2024}'
 ```
