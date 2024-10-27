@@ -25,11 +25,3 @@ jobs:
         uses: googleapis/release-please-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Codecov report
-        uses: codecov/codecov-action@v4
-        with:
-          fail_ci_if_error: true # optional (default = false)
-          files: ./coverage.txt # optional
-          token: ${{ secrets.CODECOV_TOKEN }} # required
-          verbose: true # optional (default = false)
