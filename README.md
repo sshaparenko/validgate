@@ -26,7 +26,7 @@ git clone https://github.com/sshaparenko/validgate.git
 Build the Docker image
 
 ```bash
-docker build -t validgate
+docker build -t validgate .
 ```
 
 Run image
